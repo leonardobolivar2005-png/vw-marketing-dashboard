@@ -279,8 +279,8 @@ export default function VWDashboard() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-red-950/40 border border-red-900/50 p-8 rounded-3xl">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-red-400"><Info className="w-5 h-5"/> El Síndrome de la Fragmentación</h3>
             <p className="text-lg text-red-200/90 leading-relaxed">
-              En lugar de construir un "Territorio Mental" (como lo hace Kia), Volkswagen fragmenta su pequeña inversión del 3.3%. Pautamos la <strong>Taos</strong> con un mensaje, el <strong>Nivus</strong> con otro, y el <strong>Polo Track</strong> con otro diferente. <br/><br/>
-              La gran mayoría de nuestros anuncios terminan siendo mensajes transaccionales o promociones de "Tasas y Precios". El resultado es fatal: el cliente jamás percibe por qué la <i>marca</i> Volkswagen es superior.
+              En lugar de construir un "Territorio Mental" (como lo hace Kia), Volkswagen fragmenta su pequeña inversión del 3.3% anunciando su portafolio de vehículos como si fueran marcas independientes. Pautamos la camioneta familiar <strong>Taos</strong> con un mensaje, el crossover <strong>Nivus</strong> con otro, y el auto compacto <strong>Polo Track</strong> con otro completamente diferente. <br/><br/>
+              Al pautar "nombres de modelos" en vez del "ADN de la marca", la gran mayoría de nuestros anuncios terminan siendo simples promociones de "Tasas y Precios". El resultado es fatal: el cliente memoriza el nombre de un carro, pero jamás entiende por qué la <i>marca</i> Volkswagen es superior.
             </p>
           </motion.div>
         </section>
