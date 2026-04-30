@@ -1,64 +1,342 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React from "react";
+import { motion } from "framer-motion";
+import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
+import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle } from "lucide-react";
+
+// Data
+const sovData = [
+  { name: "Chevrolet", value: 36.8, color: "#facc15" },
+  { name: "Renault", value: 22.1, color: "#f97316" },
+  { name: "Nissan", value: 16.3, color: "#ef4444" },
+  { name: "Ford", value: 7.2, color: "#3b82f6" },
+  { name: "Kia", value: 5.9, color: "#10b981" },
+  { name: "Volkswagen", value: 3.3, color: "#001e50" },
+  { name: "Otros", value: 8.4, color: "#64748b" },
+];
+
+const vwBudgetData = [
+  { name: "NUEVO POLO TRACK", porcentaje: 9.3 },
+  { name: "T-CROSS / PROMOS", porcentaje: 8.1 },
+  { name: "TAOS", porcentaje: 3.6 },
+  { name: "NIVUS", porcentaje: 2.1 },
+  { name: "OTROS / FRAGMENTADO", porcentaje: 76.9 },
+];
+
+const competitorsData = [
+  {
+    brand: "Kia",
+    icon: <Shield className="w-8 h-8 text-emerald-400" />,
+    concept: "Seguridad & Espacio",
+    messages: ["Viaja Seguro", "6 Airbags", "Mujer se Mueve Amplio"],
+    color: "bg-emerald-500/10 border-emerald-500/20",
+  },
+  {
+    brand: "Chevrolet",
+    icon: <Wrench className="w-8 h-8 text-yellow-400" />,
+    concept: "Respaldo & Mantenimiento",
+    messages: ["Cuidatón", "Compras $700.000 en Mantenimiento"],
+    color: "bg-yellow-500/10 border-yellow-500/20",
+  },
+  {
+    brand: "Renault",
+    icon: <BatteryCharging className="w-8 h-8 text-orange-400" />,
+    concept: "Electrificación & Vida",
+    messages: ["Kwid E-Tech", "Hecha para los que hacen"],
+    color: "bg-orange-500/10 border-orange-500/20",
+  },
+];
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 shadow-xl">
+        <p className="text-white font-medium">{`${payload[0].name}`}</p>
+        <p className="text-slate-300">{`${payload[0].value}% Share of Voice`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const CustomBarTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 shadow-xl">
+        <p className="text-white font-medium">{`${payload[0].payload.name}`}</p>
+        <p className="text-red-400 font-bold">{`${payload[0].value}% del Presupuesto`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+export default function VWDashboard() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-blue-500/30">
+      {/* HEADER */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white tracking-tighter">
+              VW
+            </div>
+            <span className="font-semibold text-lg tracking-tight">Marketing Dashboard</span>
+          </div>
+          <div className="text-sm font-medium text-slate-400 bg-slate-900 px-3 py-1.5 rounded-full border border-slate-800">
+            Clase de Marketing
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </header>
+
+      <main className="max-w-6xl mx-auto px-6 py-12 space-y-32">
+        {/* HERO SECTION */}
+        <section className="pt-10 pb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+              El Reto de <span className="text-blue-500">Volkswagen</span>
+            </h1>
+            <p className="text-xl text-slate-400 leading-relaxed">
+              David contra Goliat en la industria automotriz colombiana. ¿Cómo hacemos ruido cuando la competencia grita 10 veces más fuerte que nosotros?
+            </p>
+          </motion.div>
+        </section>
+
+        {/* SECTION 1: SOV */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
           >
-            Documentation
-          </a>
-        </div>
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <TrendingDown className="w-6 h-6 text-red-400" />
+                <h2 className="text-3xl font-bold">1. El Problema Inicial</h2>
+              </div>
+              <h3 className="text-2xl font-semibold mb-4 text-slate-300">Share of Voice (Participación)</h3>
+              <p className="text-slate-400 text-lg leading-relaxed mb-6">
+                Volkswagen está compitiendo en un mercado dominado por gigantes de volumen. Con un presupuesto significativamente menor, la marca se ahoga en el ruido.
+              </p>
+              <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                <p className="text-sm text-slate-400 uppercase tracking-wider font-semibold mb-1">Presupuesto VW vs Lider</p>
+                <div className="flex items-end gap-3">
+                  <span className="text-4xl font-bold text-white">$11 Mil Millones</span>
+                  <span className="text-slate-500 mb-1">vs $124.8 Mil Millones (Chev)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-[400px] w-full bg-slate-900/50 rounded-3xl border border-slate-800 flex flex-col p-6">
+              <h4 className="text-center font-medium text-slate-300 mb-2">Distribución de Inversión (Top Marcas)</h4>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={sovData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={120}
+                    paddingAngle={2}
+                    dataKey="value"
+                    stroke="none"
+                  >
+                    {sovData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <RechartsTooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="flex flex-wrap justify-center gap-3 mt-4">
+                {sovData.map((s) => (
+                  <div key={s.name} className="flex items-center gap-2 text-xs text-slate-400">
+                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: s.color }} />
+                    {s.name} ({s.value}%)
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* SECTION 2: COMPETITION INSIGHT */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Users className="w-6 h-6 text-blue-400" />
+              <h2 className="text-3xl font-bold">2. El Hallazgo Competitivo</h2>
+            </div>
+            <p className="text-xl text-slate-400">
+              Al analizar los mensajes de las campañas, descubrimos el secreto: <strong className="text-white">No venden carros, venden beneficios.</strong>
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {competitorsData.map((comp, i) => (
+              <motion.div
+                key={comp.brand}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className={`p-8 rounded-3xl border ${comp.color} bg-slate-900/30 backdrop-blur-sm relative overflow-hidden group hover:bg-slate-900/50 transition-colors`}
+              >
+                <div className="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  {comp.icon}
+                </div>
+                <div className="mb-6">{comp.icon}</div>
+                <h3 className="text-2xl font-bold mb-2">{comp.brand}</h3>
+                <p className="text-blue-400 font-medium mb-6">{comp.concept}</p>
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Mensajes en pauta</p>
+                  {comp.messages.map((msg, j) => (
+                    <div key={j} className="text-sm text-slate-300 bg-slate-800/50 py-2 px-3 rounded-lg border border-slate-700/50">
+                      "{msg}"
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 3: VW PROBLEM */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-slate-900 rounded-[2.5rem] border border-slate-800 p-8 md:p-16"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold mb-4">3. El Diagnóstico de VW</h2>
+                <h3 className="text-xl font-medium text-red-400 mb-6">El Síndrome del Catálogo</h3>
+                <p className="text-slate-400 text-lg leading-relaxed mb-6">
+                  Si la competencia concentra, <strong className="text-white">Volkswagen fragmenta.</strong> Diluimos nuestro ya limitado presupuesto promocionando carros individuales (referencias) y tasas de interés en lugar de fortalecer la marca.
+                </p>
+                <div className="space-y-4">
+                  <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl flex items-start gap-4">
+                    <Radio className="w-6 h-6 text-red-400 shrink-0 mt-1" />
+                    <div>
+                      <h4 className="font-semibold text-red-200">El resultado en el consumidor:</h4>
+                      <p className="text-sm text-red-300/80 mt-1">
+                        Sabe qué carros vende VW, pero no sabe por qué debería elegirlos por encima de un Kia o un Chevrolet. No hay un "Beneficio VW".
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="h-[400px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={vwBudgetData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#1e293b" />
+                    <XAxis type="number" stroke="#64748b" />
+                    <YAxis dataKey="name" type="category" stroke="#94a3b8" width={150} tick={{ fontSize: 12 }} />
+                    <RechartsTooltip content={<CustomBarTooltip />} cursor={{fill: '#1e293b'}} />
+                    <Bar dataKey="porcentaje" fill="#e6192b" radius={[0, 4, 4, 0]}>
+                      {vwBudgetData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index === vwBudgetData.length - 1 ? '#334155' : '#e6192b'} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* SECTION 4: THE SOLUTION */}
+        <section>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">4. La Solución Estratégica</h2>
+              <p className="text-xl text-slate-400">
+                Pasar de pautar referencias a pautar <strong className="text-white">"Por qué comprar un Volkswagen"</strong> mediante una estrategia sombrilla basada en 3 pilares.
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { title: "Seguridad", icon: <ShieldCheck className="w-10 h-10 text-blue-500" />, desc: "Plataforma MQB y 6 airbags de serie. La tranquilidad de la ingeniería Alemana." },
+              { title: "Desempeño", icon: <Zap className="w-10 h-10 text-yellow-500" />, desc: "Motores Turbo TSI. Más potencia, consumiendo menos combustible." },
+              { title: "Conectividad", icon: <Car className="w-10 h-10 text-indigo-500" />, desc: "Sistema VW Play y habitabilidad superior. Tecnología que te mueve." }
+            ].map((pilar, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+                className="bg-slate-900 border border-slate-800 p-8 rounded-[2rem] text-center group hover:border-blue-500/50 transition-colors"
+              >
+                <div className="w-20 h-20 mx-auto bg-slate-950 rounded-full flex items-center justify-center border border-slate-800 mb-6 group-hover:scale-110 transition-transform">
+                  {pilar.icon}
+                </div>
+                <h3 className="text-2xl font-bold mb-4">{pilar.title}</h3>
+                <p className="text-slate-400">{pilar.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 5: CREATIVE CONCEPT */}
+        <section className="pb-32">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-blue-900/40 to-slate-900 border border-blue-800/50 rounded-[2.5rem] p-8 md:p-16 text-center relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+            
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <span className="bg-blue-600 text-white text-xs font-bold uppercase tracking-widest py-1.5 px-4 rounded-full mb-8 inline-block">
+                Concepto Creativo
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-white leading-tight">
+                "La competencia te hace elegir. Nosotros lo pusimos todo en un solo lugar."
+              </h2>
+              
+              <div className="bg-slate-950/80 p-8 rounded-3xl border border-slate-800 mb-8 backdrop-blur-md">
+                <h3 className="text-xl font-semibold mb-6 flex items-center justify-center gap-2">
+                  <PlayCircle className="text-blue-500" /> Pieza Hero: "Elige Todo"
+                </h3>
+                <p className="text-slate-300 text-left mb-4 font-mono text-sm">
+                  <strong className="text-blue-400">[Locutor]:</strong> "Algunos buscan conectividad... otros buscan una fortaleza. Y están los que necesitan la potencia para llegar más lejos."
+                </p>
+                <p className="text-slate-300 text-left mb-4 font-mono text-sm">
+                  <strong className="text-blue-400">[Locutor]:</strong> "No importa qué Volkswagen elijas. El beneficio siempre viene de serie."
+                </p>
+                <p className="text-slate-300 text-center mt-6 text-xl font-bold uppercase tracking-wider text-white">
+                  MÁS SEGUROS. MÁS POTENTES. MÁS CONECTADOS.
+                </p>
+              </div>
+
+              <p className="text-slate-400">
+                KPI: Posicionar a VW como la marca "Premium Accesible", logrando que la inversión conjunta beneficie a todo el portafolio en lugar de competir internamente.
+              </p>
+            </div>
+          </motion.div>
+        </section>
       </main>
     </div>
   );
