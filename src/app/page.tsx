@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
-import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle } from "lucide-react";
+import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle, Info } from "lucide-react";
 
 // Data
 const sovData = [
@@ -165,6 +165,14 @@ export default function VWDashboard() {
               </div>
             </div>
           </motion.div>
+          {/* ANÁLISIS A LA MINUCIA 1 */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-blue-400"><Info className="w-5 h-5"/> Análisis a profundidad</h3>
+            <p className="text-lg text-slate-300 leading-relaxed">
+              El mercado automotriz analizado mueve aproximadamente <strong>$339.6 Mil Millones</strong>. En este océano de inversión masiva, Volkswagen (con $11 Mil Millones) cuenta con un <i>Share of Voice</i> del 3.3%. <br/><br/>
+              <strong>La conclusión estratégica:</strong> Es imposible competir usando "fuerza bruta" (frecuencia y volumen). Si Volkswagen intenta gritar de la misma forma que lo hace Chevrolet, su voz se perderá en el ruido. Se requiere extrema eficiencia y diferenciación.
+            </p>
+          </motion.div>
         </section>
 
         {/* SECTION 2: COMPETITION INSIGHT */}
@@ -211,6 +219,15 @@ export default function VWDashboard() {
               </motion.div>
             ))}
           </div>
+          
+          {/* ANÁLISIS A LA MINUCIA 2 */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-slate-900/50 border border-slate-800 p-8 rounded-3xl">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-blue-400"><Info className="w-5 h-5"/> Explicación Táctica</h3>
+            <p className="text-lg text-slate-300 leading-relaxed">
+              Al auditar los mensajes de la competencia, encontramos un patrón claro. Marcas como Kia o Chevrolet no gastan su dinero explicando las especificaciones de sus motores; gastan millones consolidando <strong>Territorios Mentales</strong>.<br/><br/>
+              Kia concentra su pauta en repetir conceptos como <i>"Amplitud"</i> y <i>"Airbags"</i>. Chevrolet creó una campaña sombrilla llamada <i>"Cuidatón"</i> enfocada en el mantenimiento. Esto crea atajos mentales: cuando el cliente piensa en "respaldo", piensa en Chevrolet, independientemente de qué carro compre.
+            </p>
+          </motion.div>
         </section>
 
         {/* SECTION 3: VW PROBLEM */}
@@ -257,6 +274,15 @@ export default function VWDashboard() {
               </div>
             </div>
           </motion.div>
+
+          {/* ANÁLISIS A LA MINUCIA 3 */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-red-950/40 border border-red-900/50 p-8 rounded-3xl">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-red-400"><Info className="w-5 h-5"/> El Síndrome de la Fragmentación</h3>
+            <p className="text-lg text-red-200/90 leading-relaxed">
+              En lugar de construir un "Territorio Mental" (como lo hace Kia), Volkswagen fragmenta su pequeña inversión del 3.3%. Pautamos la <strong>Taos</strong> con un mensaje, el <strong>Nivus</strong> con otro, y el <strong>Polo Track</strong> con otro diferente. <br/><br/>
+              La gran mayoría de nuestros anuncios terminan siendo mensajes transaccionales o promociones de "Tasas y Precios". El resultado es fatal: el cliente jamás percibe por qué la <i>marca</i> Volkswagen es superior.
+            </p>
+          </motion.div>
         </section>
 
         {/* SECTION 4: THE SOLUTION */}
@@ -296,6 +322,15 @@ export default function VWDashboard() {
               </motion.div>
             ))}
           </div>
+
+          {/* ANÁLISIS A LA MINUCIA 4 */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-blue-400"><Info className="w-5 h-5"/> Arquitectura de Marca</h3>
+            <p className="text-lg text-slate-300 leading-relaxed">
+              La estrategia consiste en crear una <strong>Campaña Sombrilla</strong>. Al enfocarnos en pautar los 3 beneficios principales transversales a toda la marca (Seguridad, Motor TSI, Conectividad), consolidamos todo el presupuesto. <br/><br/>
+              Si invertimos en un anuncio que demuestre que <i>"Todos los VW vienen con 6 airbags y motores Turbo"</i>, un solo anuncio impulsa simultáneamente las ventas de todos los modelos, dándole al consumidor una razón de peso ("Ingeniería Alemana") para elegirnos.
+            </p>
+          </motion.div>
         </section>
 
         {/* SECTION 5: CREATIVE CONCEPT */}
@@ -331,9 +366,18 @@ export default function VWDashboard() {
                 </p>
               </div>
 
-              <p className="text-slate-400">
+              <p className="text-slate-400 mb-8">
                 KPI: Posicionar a VW como la marca "Premium Accesible", logrando que la inversión conjunta beneficie a todo el portafolio en lugar de competir internamente.
               </p>
+              
+              {/* ANÁLISIS A LA MINUCIA 5 */}
+              <div className="bg-slate-900/80 border border-slate-800 p-8 rounded-3xl text-left backdrop-blur-sm">
+                <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-emerald-400"><Info className="w-5 h-5"/> Ejecución y Producción</h3>
+                <p className="text-lg text-slate-300 leading-relaxed">
+                  Históricamente, el 54% de la inversión publicitaria de VW está en Radio, lo que suele derivar en la "típica cuña comercial rápida" gritando tasas de interés.<br/><br/>
+                  La propuesta creativa cambia esto: utilizaremos un formato inmersivo (Sonido 3D, ASMR, silencio táctico) para romper la pauta masiva y transmitir un sentimiento verdaderamente premium, elevando la percepción de la marca sin necesidad de gastar en televisión costosa.
+                </p>
+              </div>
             </div>
           </motion.div>
         </section>
