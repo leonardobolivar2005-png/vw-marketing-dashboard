@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
-import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle, Info } from "lucide-react";
+import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle, Info, Crown, BarChart3 } from "lucide-react";
 
 // Data
 const sovData = [
@@ -22,6 +22,13 @@ const vwBudgetData = [
   { name: "TAOS", porcentaje: 3.6 },
   { name: "NIVUS", porcentaje: 2.1 },
   { name: "OTROS / FRAGMENTADO", porcentaje: 76.9 },
+];
+
+const mediaData = [
+  { name: "Radio", inversion: 102.5 },
+  { name: "TV Cable", inversion: 59.6 },
+  { name: "TV Abierta", inversion: 54.8 },
+  { name: "Prensa", inversion: 49.2 },
 ];
 
 const competitorsData = [
@@ -228,6 +235,94 @@ export default function VWDashboard() {
               Kia concentra su pauta en repetir conceptos como <i>"Amplitud"</i> y <i>"Airbags"</i>. Chevrolet creó una campaña sombrilla llamada <i>"Cuidatón"</i> enfocada en el mantenimiento. Esto crea atajos mentales: cuando el cliente piensa en "respaldo", piensa en Chevrolet, independientemente de qué carro compre.
             </p>
           </motion.div>
+          </motion.div>
+        </section>
+
+        {/* SECTION 3: RADIOGRAFÍA DE MEDIOS */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <BarChart3 className="w-6 h-6 text-indigo-400" />
+              <h2 className="text-3xl font-bold">3. Radiografía de Medios</h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* REY ABSOLUTO */}
+              <div className="lg:col-span-1 bg-gradient-to-br from-yellow-900/40 to-slate-900 border border-yellow-700/50 p-8 rounded-3xl relative overflow-hidden group">
+                <div className="absolute -right-6 -top-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Crown className="w-40 h-40 text-yellow-500" />
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <Crown className="w-8 h-8 text-yellow-500" />
+                  <h3 className="text-2xl font-bold text-yellow-500">El Rey Absoluto</h3>
+                </div>
+                <h4 className="text-4xl font-extrabold text-white mb-2">Chevrolet</h4>
+                <p className="text-yellow-200/80 mb-6 font-medium text-lg">$124.8 Mil Millones (36.8% SOV)</p>
+                <div className="space-y-4">
+                  <div className="bg-slate-950/50 p-4 rounded-xl border border-yellow-900/30">
+                    <p className="text-sm text-slate-400 mb-1">Estrategia Dominante:</p>
+                    <p className="text-slate-200 font-medium">Fuerza bruta y volumen masivo. Gastan <strong>$57.8 MM</strong> solo en Radio, monopolizando el medio más popular del país.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* GRAFICO DE MEDIOS */}
+              <div className="lg:col-span-2 bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+                <h3 className="text-xl font-bold mb-6 text-slate-300">¿Dónde gasta su dinero la competencia?</h3>
+                <div className="h-[250px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={mediaData} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#1e293b" />
+                      <XAxis type="number" stroke="#64748b" tickFormatter={(value) => `$${value}k`} />
+                      <YAxis dataKey="name" type="category" stroke="#94a3b8" />
+                      <RechartsTooltip 
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            return (
+                              <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 shadow-xl">
+                                <p className="text-white font-medium">{`${payload[0].payload.name}`}</p>
+                                <p className="text-indigo-400 font-bold">{`$${payload[0].value} Mil Millones`}</p>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }} 
+                        cursor={{fill: '#1e293b'}} 
+                      />
+                      <Bar dataKey="inversion" fill="#6366f1" radius={[0, 4, 4, 0]}>
+                        {mediaData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={index === 0 ? '#818cf8' : '#4f46e5'} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl">
+              <h4 className="font-bold text-orange-400 mb-2">Renault (El Rey del Cable)</h4>
+              <p className="text-slate-300 text-sm">Prefieren medios visuales y segmentados. Su inversión principal está en TV por Suscripción ($32.3 MM), ideal para mostrar su enfoque ecológico y tecnológico (E-Tech).</p>
+            </div>
+            <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl">
+              <h4 className="font-bold text-red-500 mb-2">Nissan (Alcance Nacional)</h4>
+              <p className="text-slate-300 text-sm">Apuestan por la masividad visual. Lideran la inversión en Televisión Abierta ($20.9 MM) buscando llegar a todos los hogares colombianos de manera tradicional.</p>
+            </div>
+          </div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+            <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-indigo-400"><Info className="w-5 h-5"/> Implicación para Volkswagen</h3>
+            <p className="text-lg text-slate-300 leading-relaxed">
+              La Radio es un campo de batalla hiper-saturado. Si Volkswagen entra a pautar de forma tradicional en radio comercial, <strong>su inversión de $11 MM será ahogada instantáneamente por los $102 MM de la competencia</strong>. La táctica de VW no puede ser gritar más fuerte, sino usar el medio de una forma completamente diferente (Formatos inmersivos, ASMR, pausas tácticas) para generar contraste.
+            </p>
+          </motion.div>
         </section>
 
         {/* SECTION 3: VW PROBLEM */}
@@ -240,7 +335,7 @@ export default function VWDashboard() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-bold mb-4">3. El Diagnóstico de VW</h2>
+                <h2 className="text-3xl font-bold mb-4">4. El Diagnóstico de VW</h2>
                 <h3 className="text-xl font-medium text-red-400 mb-6">El Síndrome del Catálogo</h3>
                 <p className="text-slate-400 text-lg leading-relaxed mb-6">
                   Si la competencia concentra, <strong className="text-white">Volkswagen fragmenta.</strong> Diluimos nuestro ya limitado presupuesto promocionando carros individuales (referencias) y tasas de interés en lugar de fortalecer la marca.
@@ -293,7 +388,7 @@ export default function VWDashboard() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">4. La Solución Estratégica</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">5. La Solución Estratégica</h2>
               <p className="text-xl text-slate-400">
                 Pasar de pautar referencias a pautar <strong className="text-white">"Por qué comprar un Volkswagen"</strong> mediante una estrategia sombrilla basada en 3 pilares.
               </p>
