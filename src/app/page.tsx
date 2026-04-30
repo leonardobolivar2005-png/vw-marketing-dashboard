@@ -235,7 +235,6 @@ export default function VWDashboard() {
               Kia concentra su pauta en repetir conceptos como <i>"Amplitud"</i> y <i>"Airbags"</i>. Chevrolet creó una campaña sombrilla llamada <i>"Cuidatón"</i> enfocada en el mantenimiento. Esto crea atajos mentales: cuando el cliente piensa en "respaldo", piensa en Chevrolet, independientemente de qué carro compre.
             </p>
           </motion.div>
-          </motion.div>
         </section>
 
         {/* SECTION 3: RADIOGRAFÍA DE MEDIOS */}
