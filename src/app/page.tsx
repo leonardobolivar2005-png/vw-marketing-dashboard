@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip as RechartsTooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
-import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle, Info, Crown, BarChart3 } from "lucide-react";
+import { TrendingDown, Users, Zap, Shield, Car, BatteryCharging, Radio, Wrench, ShieldCheck, PlayCircle, Info, Crown, BarChart3, Target } from "lucide-react";
 
 // Data
 const sovData = [
@@ -29,6 +29,14 @@ const mediaData = [
   { name: "TV Cable", inversion: 59.6 },
   { name: "TV Abierta", inversion: 54.8 },
   { name: "Prensa", inversion: 49.2 },
+];
+
+const vwMediaDistData = [
+  { name: "Radio", value: 54.7, color: "#6366f1" },
+  { name: "TV Nacional", value: 22.4, color: "#818cf8" },
+  { name: "Prensa", value: 11.1, color: "#a5b4fc" },
+  { name: "TV Suscripción", value: 8.1, color: "#c7d2fe" },
+  { name: "Otros", value: 3.7, color: "#334155" },
 ];
 
 const competitorsData = [
@@ -379,7 +387,93 @@ export default function VWDashboard() {
           </motion.div>
         </section>
 
-        {/* SECTION 4: THE SOLUTION */}
+        {/* SECTION 5: VW MEDIA DISTRIBUTION AND ROI */}
+        <section>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <Target className="w-6 h-6 text-emerald-400" />
+              <h2 className="text-3xl font-bold">5. Eficiencia de Pauta y el Error Táctico</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {/* ROI (Costo Promedio) */}
+              <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-center">
+                <h3 className="text-xl font-bold mb-6 text-slate-300">Eficiencia (Costo Promedio por Anuncio)</h3>
+                <p className="text-sm text-slate-400 mb-6">Al no tener cifras de ventas, medimos la eficiencia de la inversión (ROI de medios) calculando cuánto cuesta poner al aire un anuncio.</p>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-end border-b border-slate-800 pb-4">
+                    <div>
+                      <p className="text-yellow-500 font-bold text-lg">Chevrolet</p>
+                      <p className="text-xs text-slate-500">Alta eficiencia por volumen masivo</p>
+                    </div>
+                    <p className="text-2xl font-bold text-white">$987k <span className="text-sm font-normal text-slate-400">/ anuncio</span></p>
+                  </div>
+                  <div className="flex justify-between items-end border-b border-slate-800 pb-4">
+                    <div>
+                      <p className="text-orange-400 font-bold text-lg">Renault</p>
+                      <p className="text-xs text-slate-500">Baja eficiencia (medios premium/TV)</p>
+                    </div>
+                    <p className="text-2xl font-bold text-white">$2.1M <span className="text-sm font-normal text-slate-400">/ anuncio</span></p>
+                  </div>
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <p className="text-blue-500 font-bold text-lg">Volkswagen</p>
+                      <p className="text-xs text-slate-500">Eficiencia media, sin impacto</p>
+                    </div>
+                    <p className="text-2xl font-bold text-white">$1.0M <span className="text-sm font-normal text-slate-400">/ anuncio</span></p>
+                  </div>
+                </div>
+              </div>
+
+              {/* VW MEDIA DISTRIBUTION */}
+              <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-center">
+                <h3 className="text-xl font-bold mb-2 text-slate-300">Distribución de Medios en VW</h3>
+                <p className="text-sm text-slate-400 mb-4">¿En qué gasta VW sus $11 Mil Millones?</p>
+                <div className="h-[250px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={vwMediaDistData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={60}
+                        outerRadius={90}
+                        paddingAngle={5}
+                        dataKey="value"
+                        stroke="none"
+                      >
+                        {vwMediaDistData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <RechartsTooltip content={<CustomTooltip />} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex justify-center mt-2">
+                  <div className="bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-xl text-center">
+                    <p className="text-indigo-400 font-bold text-xl">54.7%</p>
+                    <p className="text-xs text-indigo-300">destinado a la Radio</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-red-950/30 border border-red-900/50 p-8 rounded-3xl">
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-red-400"><Info className="w-5 h-5"/> El Error Táctico Definitivo</h3>
+              <p className="text-lg text-slate-300 leading-relaxed">
+                El 54.7% del presupuesto de VW se destina a la Radio. Es decir, <strong>Volkswagen se está metiendo directamente en la boca del lobo a pelear contra los $57.8 Mil Millones que gasta Chevrolet ahí mismo</strong>. Pagar un millón de pesos por anuncio en Radio para promocionar la tasa de interés de una Taos es botar el dinero a la basura frente al dominio abrumador de la competencia.
+              </p>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* SECTION 6: THE SOLUTION */}
         <section>
           <div className="text-center max-w-3xl mx-auto mb-16">
             <motion.div
@@ -387,7 +481,7 @@ export default function VWDashboard() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">5. La Solución Estratégica</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">6. La Solución Estratégica</h2>
               <p className="text-xl text-slate-400">
                 Pasar de pautar referencias a pautar <strong className="text-white">"Por qué comprar un Volkswagen"</strong> mediante una estrategia sombrilla basada en 3 pilares.
               </p>
